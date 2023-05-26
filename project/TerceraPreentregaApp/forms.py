@@ -17,7 +17,7 @@ class ClienteForm(forms.Form):
     })
     telefono = forms.CharField(
         label="Teléfono",
-        max_length=9
+        max_length=11
     )
     telefono.widget.attrs.update({
         'class':'form-control'
