@@ -5,13 +5,13 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-center text-primary">¡Bienvenido!</h1>
+                <h1 class="text-center text-primary mb-4">¡Bienvenido!</h1>
             </div>
         </div>
-
+        {% if nClientes == 0 and nProductos == 0 %}
         <div class="row">
             <div class="col-12">
-                <p class="text-center">Aún no cuentas con ningún registro &#128532;</p>
+                <p class="text-center">Aún no cuentas con ningún registro de Cliente o Producto &#128532;</p>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -22,15 +22,65 @@
             </div>
             <div class="col-3">
                 <div class="text-center">
-                    <button type="button" class="btn btn-success">Nuevo producto</button>
+                    <a class="btn btn-success" href="{% url 'Productos' %}">Nuevo producto</a>
                 </div>
             </div>
             <div class="col-3">
                 <div class="text-center">
-                    <button type="button" class="btn btn-secondary">Nueva categoría</button>
+                    <a class="btn btn-secondary" href="{% url 'Categorias' %}">Nueva categoria</a>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                
+            </div>
+        </div>
+        {% else %}
+        <form action="" method="POST">{% csrf_token %}
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-6">
+                        {{ form.search_text }}
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <div class="col-4">
+                        <input type="submit", value="Buscar" class="btn btn-primary w-100">
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+</div>
+<br>
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        {% for c in clientes %}
+        <div class="col-4 mb-2">
+            <div class="card pt-4" style="width: 100%;">
+                <img class="card-img-top img-card" src="{% static 'user.png' %}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{ c.nombre }} {{ c.apellido }}</h5>
+                  <p class="card-text"><b>Email: </b>{{ c.email }}</p>
+                  <p class="card-text"><b>Teléfono: </b>{{ c.telefono }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% for p in productos %}
+        <div class="col-4 mb-2">
+            <div class="card pt-4" style="width: 100%;">
+                <img class="card-img-top img-card" src="{% static 'product_icon.png' %}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{ p.nombre }}</h5>
+                  <p class="card-text"><b>Precio: $</b>{{ p.precio }}</p>
+                  <p class="card-text"><b>Categoría: </b>{{ p.categoria }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 <!-- Footer -->
